@@ -1,49 +1,19 @@
-package Praktikum;
+package praktikum;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 
-public class ImportantQuestions {
-    private  WebDriver driver;
-    private  WebDriverWait wait;
+import praktikum.PageObject.PageObjectForImportantQuestions;
 
-    @BeforeEach
-    public void setDriver() {
-        if ("firefox".equals(System.getProperty("browser"))) {
-            setupFirefox();
-        } else {
-            setupChrome();
-        }
-    }
+public class ImportantQuestions extends BaseTest {
 
-    //@BeforeEach
-    public void setupChrome() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-    }
-
-   // @BeforeEach
-    public void setupFirefox() {
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-    }
 
     // Метод для параметризации
     private static Stream<Arguments> faqDataProvider() {
@@ -64,10 +34,10 @@ public class ImportantQuestions {
     @DisplayName("Проверка ответов в аккордеоне 'Вопросы о важном'")
     void testFaqAccordion(int questionIndex, String expectedAnswer) {
 
-        // СОЗДАЕМ PageObjectForImoprtantQuestions и используем его
-        PageObjectForImoprtantQuestions page = new PageObjectForImoprtantQuestions(driver);
+        // СОЗДАЕМ PageObjectForImportantQuestions и используем его
+        PageObjectForImportantQuestions page = new PageObjectForImportantQuestions(driver);
 
-        // Закрываем куки через PageObjectForImoprtantQuestions
+        // Закрываем куки через PageObjectForImportantQuestions
         page.acceptCookies();
         // Скроллим до раздела "Вопросы о важном"
         page.scrollToFaqSection();
@@ -87,8 +57,5 @@ public class ImportantQuestions {
                 "Текст ответа для вопроса " + questionIndex + " должен соответствовать ожидаемому");
     }
 
-    @AfterEach
-    void teardown() {
-        driver.quit(); // Закрываем браузер после каждого теста
-    }
+
 }

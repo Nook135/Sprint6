@@ -1,47 +1,18 @@
-package Praktikum;
+package praktikum;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import java.time.Duration;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import praktikum.PageObject.MainPage;
+import praktikum.PageObject.OrderPage;
+import praktikum.PageObject.RentPage;
+
 import java.util.stream.Stream;
 
 
-public class TopOrder {
-    private WebDriver driver;
-    private WebDriverWait wait;
+public class TopOrder extends BaseTest {
 
-    @BeforeEach
-    public void setDriver() {
-        if ("firefox".equals(System.getProperty("browser"))) {
-            setupFirefox();
-        } else {
-            setupChrome();
-        }
-    }
-
-    public void setupChrome() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-    }
-
-    public void setupFirefox() {
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-    }
 
     private static Stream<Arguments> orderDataProvider() {
         return Stream.of(
@@ -62,13 +33,13 @@ public class TopOrder {
         RentPage rentPage = new RentPage(driver);
 
         // Принять куки
-        mainPage.ClickCookieButton();
+        mainPage.clickCookieButton();
 
         // Выбор кнопки в зависимости от параметра
         if ("top".equals(buttonType)) {
-            mainPage.ClickTopButton();
+            mainPage.clickTopButton();
         } else {
-            mainPage.ClickBottomOrderButton();
+            mainPage.clickBottomOrderButton();
         }
 
         // Заполняем форму "Для кого самокат"
@@ -88,11 +59,12 @@ public class TopOrder {
         rentPage.clickOrderButton();
         rentPage.confirmOrder();
 
-        Assertions.assertTrue(rentPage.isOrderSuccessDisplayed(), "Заказ оформлен");
+        // Проверяем, что сообщение отображается
+        Assertions.assertTrue(rentPage.isOrderSuccessDisplayed(), "Сообщение об успешном заказе должно отображаться");
+
+        // Проверяем текст сообщения
+        String actualSuccessText = rentPage.getOrderSuccessText();
+        String expectedSuccessText = "Заказ оформлен";
     }
 
-    @AfterEach
-    public void tearDown() {
-        driver.quit();
-    }
 }

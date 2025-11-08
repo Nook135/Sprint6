@@ -1,4 +1,4 @@
-package Praktikum;
+package praktikum.PageObject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -71,5 +71,8 @@ public class RentPage {
     private By orderSuccessModal = By.xpath(".//div[contains(@class, 'Order_ModalHeader')]");
     public boolean isOrderSuccessDisplayed() {
         return driver.findElement(orderSuccessModal).isDisplayed();
+    }
+    public String getOrderSuccessText() {
+        return driver.findElement(orderSuccessModal).getText();
     }
 }
