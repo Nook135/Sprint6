@@ -1,14 +1,16 @@
 package praktikum;
 
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import praktikum.PageObject.MainPage;
-import praktikum.PageObject.OrderPage;
-import praktikum.PageObject.RentPage;
+import praktikum.pageobject.MainPage;
+import praktikum.pageobject.OrderPage;
+import praktikum.pageobject.RentPage;
 
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class TopOrder extends BaseTest {
@@ -49,7 +51,7 @@ public class TopOrder extends BaseTest {
         orderPage.selectMetroStation(metro);
         orderPage.setPhone(phone);
 
-        orderPage.ClickNextButton();
+        orderPage.сlickNextButton();
 
         // Заполняем форму "Про аренду"
         rentPage.setDate(date);
@@ -60,11 +62,13 @@ public class TopOrder extends BaseTest {
         rentPage.confirmOrder();
 
         // Проверяем, что сообщение отображается
-        Assertions.assertTrue(rentPage.isOrderSuccessDisplayed(), "Сообщение об успешном заказе должно отображаться");
+        assertTrue(rentPage.isOrderSuccessDisplayed(), "Сообщение об успешном заказе");
 
         // Проверяем текст сообщения
         String actualSuccessText = rentPage.getOrderSuccessText();
         String expectedSuccessText = "Заказ оформлен";
+        assertTrue(actualSuccessText.contains(expectedSuccessText),
+                "Сообщение об успешном заказе: " + expectedSuccessText);
     }
 
 }

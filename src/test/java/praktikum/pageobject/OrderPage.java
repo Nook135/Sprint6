@@ -1,4 +1,4 @@
-package praktikum.PageObject;
+package praktikum.pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -44,7 +44,7 @@ public class OrderPage {
         driver.findElement(inputPhone).sendKeys(phone);  // Ввод телефона в поле
     }
 
-    public void ClickNextButton() {
+    public void сlickNextButton() {
         driver.findElement(nextButton).click();  // Клик по кнопке "Далее"
     }
 

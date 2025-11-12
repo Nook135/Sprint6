@@ -1,4 +1,4 @@
-package praktikum.PageObject;
+package praktikum.pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -13,25 +13,25 @@ public class MainPage {
     }
 
     //локатор для кнопки принять куки
-    private By CookieButton = By.id("rcc-confirm-button");
+    private By cookieButton = By.id("rcc-confirm-button");
     // метод нажимающий на кнопку принятия кук
     public void clickCookieButton() {
-        driver.findElement(CookieButton).click();
+        driver.findElement(cookieButton).click();
     }
 
     // локатор верхняя кнопка "Заказать"
-    private By OrderButtonTop = By.xpath(".//button[text()='Заказать']");
+    private By orderButtonTop = By.xpath(".//button[text()='Заказать']");
     // Метод кликает по кнопке Заказать вверху экрана
     public void clickTopButton() {
-        driver.findElement(OrderButtonTop).click();
+        driver.findElement(orderButtonTop).click();
     }
     // локатор нижняя кнопка "Заказать"
-    private By OrderButtonBottom = By.xpath("//div[contains(@class, 'Home_FinishButton')]//button[text()='Заказать']");
+    private By orderButtonBottom = By.xpath("//div[contains(@class, 'Home_FinishButton')]//button[text()='Заказать']");
 
     // Метод кликает по кнопке Заказать внизу экрана
     public void clickBottomOrderButton() {
         // Прокручиваем к нижней кнопке
-        WebElement bottomButton = driver.findElement(OrderButtonBottom);
+        WebElement bottomButton = driver.findElement(orderButtonBottom);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", bottomButton);
         bottomButton.click();
     }

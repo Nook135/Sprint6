@@ -1,4 +1,4 @@
-package praktikum.PageObject;
+package praktikum.pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -61,6 +61,7 @@ public class RentPage {
     public void clickOrderButton() {
         driver.findElement(orderButton).click();
     }
+
     // жмем в модальном окне "Да"
     private By confirmOrderButton = By.xpath(".//button[text()='Да']");
     public void confirmOrder() {
